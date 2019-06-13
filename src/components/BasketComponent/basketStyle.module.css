@@ -1,0 +1,14 @@
+.button {
+    color: #fff; /* цвет текста */
+    text-decoration: none; /* убирать подчёркивание у ссылок */
+    user-select: none; /* убирать выделение текста */
+    background: rgb(212,75,56); /* фон кнопки */
+    padding: 0px; /* отступ от текста */
+    outline: none; /* убирать контур в Mozilla */
+    width: 20px;
+    height: 20px;
+    border: none;
+    margin-left: 15px;
+  } 
+  .button:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
+  .button:active { background: rgb(152,15,0); } /* при нажатии */

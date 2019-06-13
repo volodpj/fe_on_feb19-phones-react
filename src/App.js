@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { getAll, getById } from './api/phone'
-import Basket from './Basket'
-import Filter from './Filter'
-import Catalog from './Catalog'
+import Basket from './components/BasketComponent/Basket';
+import Filter from './components/Filter/Filter';
+import Catalog from './components/Catalog/Catalog';
+import Viewer from './components/Viever/Viewer';
 
 import './App.css';
 
@@ -16,21 +17,45 @@ class App extends React.Component {
       phones: getAll(),
       selectedPhone: null,
       basketItems: [],
+
+
+    };
+
+    this.addIdToBasket = (id) => {
+      this.setState({
+        basketItems: [
+          ...this.state.basketItems,
+          id
+        ]
+      })
+    }
+
+
+
+    this.removeIdFromBasket = (index) => {
+    this.state.basketItems.splice(index, 1);
+     this.setState({
+       basketItems: this.state.basketItems
+     })
+      
     };
   }
-
   render() {
+
     return (
       <div className="App">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-2">
               <Filter />
-              <Basket />
+              <Basket 
+                listBasketItems={this.state.basketItems}
+                removeFromBasket={this.removeIdFromBasket}
+              />
             </div>
 
             <div className="col-md-10">
-              { this.state.selectedPhone ? (
+              {this.state.selectedPhone ? (
                 <Viewer
                   phone={this.state.selectedPhone}
                   onBack={() => {
@@ -38,42 +63,28 @@ class App extends React.Component {
                       selectedPhone: null,
                     });
                   }}
+                  addIdToBasket={this.addIdToBasket}
                 />
               ) : (
-                <Catalog
-                  phones={this.state.phones}
-                  onPhoneSelected={(phoneId) => {
-                    this.setState({
-                      selectedPhone: getById(phoneId),
-                    });
-                  }}
-                />
-              ) }
+                  <Catalog
+                    phones={this.state.phones}
+                    onPhoneSelected={(phoneId) => {
+                      this.setState({
+                        selectedPhone: getById(phoneId),
+                      });
+                    }}
+                    addIdToBasket={this.addIdToBasket}
+                  />
+                )}
             </div>
           </div>
         </div>
       </div>
     );
-  }
-}
+}}
 
-const Viewer = (props) => (
-  <div>
-    <img className="phone" src={props.phone.images[0]}/>
-    <button onClick={props.onBack}>Back</button>
-    <button>Add to basket</button>
 
-    <h1>{props.phone.name}</h1>
-    <p>{props.phone.description}</p>
-
-    <ul className="phone-thumbs">
-      { props.phone.images.map(imageUrl => (
-        <li>
-          <img src={imageUrl}/>
-        </li>
-      )) }
-    </ul>
-  </div>
-);
 
 export default App;
+
+
