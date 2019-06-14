@@ -12,3 +12,11 @@
   } 
   .button:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
   .button:active { background: rgb(152,15,0); } /* при нажатии */
+
+  ul > li{
+    display: flex;
+  }
+
+  li > p{
+    margin-left: 7px;
+  }

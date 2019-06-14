@@ -22,23 +22,53 @@ class App extends React.Component {
     };
 
     this.addIdToBasket = (id) => {
-      this.setState({
-        basketItems: [
-          ...this.state.basketItems,
-          id
-        ]
-      })
+
+      if(this.state.basketItems.length === 0){
+        this.setState({
+          basketItems: [
+            [id, 1]
+          ]
+        })
+      }else{
+        for(let i = 0; i < this.state.basketItems.length; i++){
+          if(id === this.state.basketItems[i][0]){
+            let stateBasketItems = this.state.basketItems;
+            stateBasketItems[i][1] = stateBasketItems[i][1] + 1;
+            this.setState({
+              basketItems: stateBasketItems
+            })
+          }else{
+            this.setState({
+              basketItems: [
+                ...this.state.basketItems,
+                [id, 1]
+              ]
+            })
+          }
+        }
+      }
+     
+
+
     }
 
-
-
     this.removeIdFromBasket = (index) => {
-    this.state.basketItems.splice(index, 1);
-     this.setState({
-       basketItems: this.state.basketItems
-     })
       
+      if(this.state.basketItems[index][1] > 1){
+        let stateBasketItems = this.state.basketItems;
+        stateBasketItems[index][1] = stateBasketItems[index][1] - 1;
+        this.setState({
+          basketItems: stateBasketItems
+        })
+      }else{
+        this.state.basketItems.splice(index, 1);
+        this.setState({
+          basketItems: this.state.basketItems
+        })
+      }
     };
+
+    
   }
   render() {
 

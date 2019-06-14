@@ -17,7 +17,8 @@ render(){
       <ul>
         {this.props.listBasketItems.map((idPhfone, index) => (
           <li key={ idPhfone }>
-              <p>{ idPhfone }</p>
+              <p>{ idPhfone[0] }</p>
+              <p>{ idPhfone[1] }</p>
             <button 
               className={styles.button}
               onClick={() => {this.props.removeFromBasket(index)}}>x
